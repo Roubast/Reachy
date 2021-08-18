@@ -25,10 +25,11 @@ import ikpy.chain
 from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
 
 # Take info from VR and get JointStates 
-my_chain = ikpy.chain.Chain.from_urdf_file("/opt/source/ws_moveit/src/reachy_description/reachy.URDF", base_elements=["torso"], 
+my_chain = ikpy.chain.Chain.from_urdf_file("/opt/source/ws_moveit/src/reachy_moveit_config/urdf/reachy.URDF", base_elements=["torso"], 
                                                     active_links_mask=[False, True, True, True, True, True, True, True, False])
+#print(my_chain)
 
-redis_connection = redis.Redis(host='192.168.118.96', port=6379, db=0, password='DTL@b2021')
+redis_connection = redis.Redis(host='192.168.118.16', port=6379, db=0, password='DTL@b2021')
 pubsub = redis_connection.pubsub()
 
 pos_lock = threading.Lock()
@@ -50,8 +51,8 @@ def peredelka(cur_pos, cur_rot, init_pos, init_rot):
         rot = Rotation.from_euler('xyz', [cur_rot['r'] / 180 * math.pi - init_rot['r'], 
                                     cur_rot['p'] / 180 * math.pi - init_rot['p'],
                                     cur_rot['y'] / 180 * math.pi - init_rot['y']], degrees = False).as_matrix()
-        popcop['y'] = cur_pos['x'] / 1000 - init_pos['x'] - 0.19
-        popcop['x'] = cur_pos['y'] / 1000 - init_pos['y'] 
+        popcop['x'] = cur_pos['x'] / 1000 - init_pos['x']
+        popcop['y'] = cur_pos['y'] / 1000 - init_pos['y'] - 0.19
         popcop['z'] = cur_pos['z'] / 1000 + 1 - init_pos['z'] - 0.5625 #+ 0.4375
         pos = np.array([[popcop['x']], [popcop['y']], [popcop['z']]])
         fourth_string = np.array([[0, 0, 0, 1]])
@@ -118,44 +119,9 @@ class MoveGroupPythonInterfaceTutorial(object):
         #     queue_size=1,
         # )
 
-        ## END_SUB_TUTORIAL
-
-        ## BEGIN_SUB_TUTORIAL basic_info
-        ##
-        ## Getting Basic Information
-        ## ^^^^^^^^^^^^^^^^^^^^^^^^^
-        # We can get the name of the reference frame for this robot:
-        #planning_frame = move_group.get_planning_frame()
-        #print("============ Planning frame: %s" % planning_frame)
-
-        # We can also print the name of the end-effector link for this group:
-        #eef_link = move_group.get_end_effector_link()
-        #print("============ End effector link: %s" % eef_link)
-
-        # We can get a list of all the groups in the robot:
-        #group_names = robot.get_group_names()
-        #print("============ Available Planning Groups:", robot.get_group_names())
-
-        # Sometimes for debugging it is useful to print the entire state of the
-        # robot:
-        # print("============ Printing robot state")
-        # print(robot.get_current_state())
-        # print("")
-        ## END_SUB_TUTORIAL
-
-        # Misc variables
-        # self.box_name = ""
-        # self.robot = robot
-        # self.scene = scene
-        # self.move_group = move_group
-        # self.display_trajectory_publisher = display_trajectory_publisher
-        # self.planning_frame = planning_frame
-        # self.eef_link = eef_link
-        # self.group_names = group_names
-
 
         display_trajectory_publisher = rospy.Publisher(
-            "/right_arm_position_controller/command",
+            "/reachy/right_arm_position_controller/command",
             JointTrajectory,
             queue_size=1,
         )
@@ -222,6 +188,7 @@ class MoveGroupPythonInterfaceTutorial(object):
         #plan = self.move_group.plan()
         #start_time = time.time()
         #self.move_group.go(wait=True)
+        #print(f'TIME OF "GO": {time.time() - start_time}')
         #print(type(plan))
 
         # Calling ``stop()`` ensures that there is no residual movement
@@ -241,7 +208,7 @@ class MoveGroupPythonInterfaceTutorial(object):
         traj = JointTrajectory()
         traj.joint_names = ['r_shoulder_pitch' , 'r_shoulder_roll' , 'r_arm_yaw' , 'r_elbow_pitch' , 'r_forearm_yaw' , 'r_wrist_pitch' , 'r_wrist_roll']
         ptn = JointTrajectoryPoint()
-        ptn.positions = joint_goal
+        ptn.positions = joint_goal #[1.0 , -2.0, 0.0, -1.0, 1.0, 0.0, 0.0]
         ptn.velocities = []
         ptn.time_from_start = rospy.Duration(1.0)
         traj.header.stamp = rospy.Time.now()

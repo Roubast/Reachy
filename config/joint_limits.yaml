@@ -1,0 +1,107 @@
+# joint_limits.yaml allows the dynamics properties specified in the URDF to be overwritten or augmented as needed
+
+# For beginners, we downscale velocity and acceleration limits.
+# You can always specify higher scaling factors (<= 1.1000) in your motion requests.  # Increase the values below to 1.1000 to always move at maximum speed.
+default_velocity_scaling_factor: 1
+default_acceleration_scaling_factor: 1
+
+# Specific joint properties can be changed with the keys [max_position, min_position, max_velocity, max_acceleration]
+# Joint limits can be turned off with [has_velocity_limits, has_acceleration_limits]
+joint_limits:
+  l_arm_yaw:
+    has_velocity_limits: true
+    max_velocity: 3.9
+    has_acceleration_limits: true
+    max_acceleration: 1.8
+  l_elbow_pitch:
+    has_velocity_limits: true
+    max_velocity: 3.9
+    has_acceleration_limits: true
+    max_acceleration: 1.8
+  l_forearm_yaw:
+    has_velocity_limits: true
+    max_velocity: 6.07
+    has_acceleration_limits: true
+    max_acceleration: 3.5
+  l_shoulder_pitch:
+    has_velocity_limits: true
+    max_velocity: 2.7
+    has_acceleration_limits: true
+    max_acceleration: 1.4
+  l_shoulder_roll:
+    has_velocity_limits: true
+    max_velocity: 3.9
+    has_acceleration_limits: true
+    max_acceleration: 1.8
+  l_wrist_pitch:
+    has_velocity_limits: true
+    max_velocity: 6.07
+    has_acceleration_limits: true
+    max_acceleration: 3.5
+  l_wrist_roll:
+    has_velocity_limits: true
+    max_velocity: 6.07
+    has_acceleration_limits: true
+    max_acceleration: 3.5
+  r_arm_yaw:
+    has_velocity_limits: true
+    max_velocity: 3.9
+    has_acceleration_limits: true
+    max_acceleration: 1.8
+  r_elbow_pitch:
+    has_velocity_limits: true
+    max_velocity: 3.9
+    has_acceleration_limits: true
+    max_acceleration: 3.5
+  r_forearm_yaw:
+    has_velocity_limits: true
+    max_velocity: 6.07
+    has_acceleration_limits: true
+    max_acceleration: 1.8
+  r_shoulder_pitch:
+    has_velocity_limits: true
+    max_velocity: 2.7
+    has_acceleration_limits: true
+    max_acceleration: 7
+  r_shoulder_roll:
+    has_velocity_limits: true
+    max_velocity: 3.9
+    has_acceleration_limits: true
+    max_acceleration: 7
+  r_wrist_pitch:
+    has_velocity_limits: true
+    max_velocity: 6.07
+    has_acceleration_limits: true
+    max_acceleration: 3.5
+  r_wrist_roll:
+    has_velocity_limits: true
+    max_velocity: 6.07
+    has_acceleration_limits: true
+    max_acceleration: 3.5
+
+  r_gripper:
+    has_velocity_limits: true
+    max_velocity: 0.1
+    has_acceleration_limits: true
+    max_acceleration: 0
+  l_gripper:
+    has_velocity_limits: true
+    max_velocity: 0.1
+    has_acceleration_limits: true
+    max_acceleration: 0
+
+  top2head:
+    has_velocity_limits: true
+    max_velocity: 2.7
+    has_acceleration_limits: true
+    max_acceleration: 1.4
+  middle2top:
+    has_velocity_limits: true
+    max_velocity: 2.7
+    has_acceleration_limits: true
+    max_acceleration: 1.4
+  bottom2middle:
+    has_velocity_limits: true
+    max_velocity: 2.7
+    has_acceleration_limits: true
+    max_acceleration: 1.4

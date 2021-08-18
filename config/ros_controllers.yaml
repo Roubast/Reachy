@@ -1,0 +1,226 @@
+/reachy:
+
+  # Simulation settings for using moveit_sim_controllers
+  moveit_sim_hw_interface:
+    joint_model_group: right_arm
+    joint_model_group_pose: right_rest
+  # Settings for ros_control_boilerplate control loop
+  generic_hw_control_loop:
+    loop_hz: 50
+    cycle_time_error_threshold: 0.01
+  # Settings for ros_control hardware interface
+  hardware_interface:
+    joints:
+      - l_shoulder_pitch
+      - l_shoulder_roll
+      - l_arm_yaw
+      - l_elbow_pitch
+      - l_forearm_yaw
+      - l_wrist_pitch
+      - l_wrist_roll
+      - l_gripper
+      - r_shoulder_pitch
+      - r_shoulder_roll
+      - r_arm_yaw
+      - r_elbow_pitch
+      - r_forearm_yaw
+      - r_wrist_pitch
+      - r_wrist_roll
+      - r_gripper
+      #head joints
+      - top2head
+      - middle2top
+      - bottom2middle
+    sim_control_mode: 1  # 0: position, 1: velocity
+  # Publish all joint states
+  # Creates the /joint_states topic necessary in ROS
+  joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 50
+
+  left_arm_position_controller:
+    type: "effort_controllers/JointTrajectoryController"
+    joints:
+      - l_shoulder_pitch
+      - l_shoulder_roll
+      - l_arm_yaw
+      - l_elbow_pitch
+      - l_forearm_yaw
+      - l_wrist_pitch
+      - l_wrist_roll
+    gains:
+      l_shoulder_pitch:
+        p: 500
+        d: 20
+        i: 10
+        i_clamp: 1
+      l_shoulder_roll:
+        p: 500
+        d: 20
+        i: 10
+        i_clamp: 1
+      l_arm_yaw:
+        p: 500
+        d: 20
+        i: 10
+        i_clamp: 1
+      l_elbow_pitch:
+        p: 500
+        d: 20
+        i: 10
+        i_clamp: 1
+      l_forearm_yaw:
+        p: 500
+        d: 20
+        i: 10
+        i_clamp: 1
+      l_wrist_pitch:
+        p: 500
+        d: 20
+        i: 10
+        i_clamp: 1
+      l_wrist_roll:
+        p: 500
+        d: 20
+        i: 10
+        i_clamp: 1
+
+  right_arm_position_controller:
+    type: "effort_controllers/JointTrajectoryController"
+    joints:
+      - r_shoulder_pitch
+      - r_shoulder_roll
+      - r_arm_yaw
+      - r_elbow_pitch
+      - r_forearm_yaw
+      - r_wrist_pitch
+      - r_wrist_roll
+    gains:
+      r_shoulder_pitch:
+        p: 50
+        d: 20
+        i: 10
+        i_clamp: 1
+      r_shoulder_roll:
+        p: 50
+        d: 20
+        i: 10
+        i_clamp: 1
+      r_arm_yaw:
+        p: 50
+        d: 20
+        i: 10
+        i_clamp: 1
+      r_elbow_pitch:
+        p: 50
+        d: 20
+        i: 10
+        i_clamp: 1
+      r_forearm_yaw:
+        p: 50
+        d: 20
+        i: 10
+        i_clamp: 1
+      r_wrist_pitch:
+        p: 50
+        d: 20
+        i: 10
+        i_clamp: 1
+      r_wrist_roll:
+        p: 50
+        d: 20
+        i: 10
+        i_clamp: 1
+
+  r_gripper_controller:
+    type: "effort_controllers/JointTrajectoryController"
+    joints: 
+      - r_gripper
+    gains:
+      r_gripper:
+        p: 500
+        d: 20
+        i: 10
+        i_clamp: 1
+  l_gripper_controller:
+    type: "effort_controllers/JointTrajectoryController"
+    joints: 
+      - l_gripper
+    gains:
+      l_gripper:
+        p: 500
+        d: 20
+        i: 10
+        i_clamp: 1
+
+  head_controller:
+    type: "effort_controllers/JointTrajectoryController"
+    joints: 
+      - top2head
+      - middle2top
+      - bottom2middle
+    gains:
+      top2head:
+        p: 50
+        d: 20
+        i: 10
+        i_clamp: 1
+      middle2top:
+        p: 50
+        d: 20
+        i: 10
+        i_clamp: 1
+      bottom2middle:
+        p: 50
+        d: 20
+        i: 10
+        i_clamp: 1
+
+  controller_list:
+    - name: left_arm_position_controller
+      action_ns: follow_joint_trajectory
+      default: True
+      type: FollowJointTrajectory
+      joints:
+        - l_shoulder_pitch
+        - l_shoulder_roll
+        - l_arm_yaw
+        - l_elbow_pitch
+        - l_forearm_yaw
+        - l_wrist_pitch
+        - l_wrist_roll
+
+    - name: right_arm_position_controller
+      action_ns: follow_joint_trajectory
+      default: True
+      type: FollowJointTrajectory
+      joints:
+        - r_shoulder_pitch
+        - r_shoulder_roll
+        - r_arm_yaw
+        - r_elbow_pitch
+        - r_forearm_yaw
+        - r_wrist_pitch
+        - r_wrist_roll
+
+    - name: r_gripper_controller
+      action_ns: follow_joint_trajectory
+      default: True
+      type: FollowJointTrajectory
+      joints:
+        - r_gripper
+
+    - name: l_gripper_controller
+      action_ns: follow_joint_trajectory
+      default: True
+      type: FollowJointTrajectory
+      joints:
+        - l_gripper
+    - name: head_controller
+      action_ns: follow_joint_trajectory
+      default: True
+      type: FollowJointTrajectory
+      joints:
+        - top2head
+        - middle2top
+        - bottom2middle

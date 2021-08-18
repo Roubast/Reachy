@@ -1,0 +1,101 @@
+digraph G {
+node [shape=box];
+"world" [label="world"];
+"pedestal" [label="pedestal"];
+"torso" [label="torso"];
+"l_shoulder" [label="l_shoulder"];
+"l_shoulder_x" [label="l_shoulder_x"];
+"l_upper_arm" [label="l_upper_arm"];
+"l_forearm" [label="l_forearm"];
+"l_wrist" [label="l_wrist"];
+"l_wrist2hand" [label="l_wrist2hand"];
+"l_gripper_thumb" [label="l_gripper_thumb"];
+"l_gripper_finger" [label="l_gripper_finger"];
+"left_tip" [label="left_tip"];
+"bottom_orbita_arm" [label="bottom_orbita_arm"];
+"head" [label="head"];
+"left_camera" [label="left_camera"];
+"right_camera" [label="right_camera"];
+"middle_orbita_arm" [label="middle_orbita_arm"];
+"head" [label="head"];
+"left_camera" [label="left_camera"];
+"right_camera" [label="right_camera"];
+"top_orbita_arm" [label="top_orbita_arm"];
+"head" [label="head"];
+"left_camera" [label="left_camera"];
+"right_camera" [label="right_camera"];
+"r_shoulder" [label="r_shoulder"];
+"r_shoulder_x" [label="r_shoulder_x"];
+"r_upper_arm" [label="r_upper_arm"];
+"r_forearm" [label="r_forearm"];
+"r_wrist" [label="r_wrist"];
+"r_wrist2hand" [label="r_wrist2hand"];
+"r_gripper_thumb" [label="r_gripper_thumb"];
+"r_gripper_finger" [label="r_gripper_finger"];
+"right_tip" [label="right_tip"];
+node [shape=ellipse, color=blue, fontcolor=blue];
+"world" -> "world_joint" [label="xyz: 0 0 0 \nrpy: 0 -0 0"]
+"world_joint" -> "pedestal"
+"pedestal" -> "pedestal" [label="xyz: 0 0 1 \nrpy: 0 -0 0"]
+"pedestal" -> "torso"
+"torso" -> "l_shoulder_pitch" [label="xyz: 0 0.19 0 \nrpy: 0 -0 0"]
+"l_shoulder_pitch" -> "l_shoulder"
+"l_shoulder" -> "l_shoulder_roll" [label="xyz: 0 0 0 \nrpy: 0 -0 0"]
+"l_shoulder_roll" -> "l_shoulder_x"
+"l_shoulder_x" -> "l_arm_yaw" [label="xyz: 0 0 0 \nrpy: 0 -0 0"]
+"l_arm_yaw" -> "l_upper_arm"
+"l_upper_arm" -> "l_elbow_pitch" [label="xyz: 0 0 -0.28 \nrpy: 0 -0 0"]
+"l_elbow_pitch" -> "l_forearm"
+"l_forearm" -> "l_forearm_yaw" [label="xyz: 0 0 0 \nrpy: 0 -0 0"]
+"l_forearm_yaw" -> "l_wrist"
+"l_wrist" -> "l_wrist_pitch" [label="xyz: 0 0 -0.25 \nrpy: 0 -0 0"]
+"l_wrist_pitch" -> "l_wrist2hand"
+"l_wrist2hand" -> "l_wrist_roll" [label="xyz: 0 0 -0.0325 \nrpy: 0 -0 0"]
+"l_wrist_roll" -> "l_gripper_thumb"
+"l_gripper_thumb" -> "l_gripper" [label="xyz: 0 0.037 -0.03998 \nrpy: 0 -0 0"]
+"l_gripper" -> "l_gripper_finger"
+"l_gripper_thumb" -> "l_tip" [label="xyz: 0 0.012 -0.085 \nrpy: 0 -0 0"]
+"l_tip" -> "left_tip"
+"torso" -> "orbita_bottom" [label="xyz: 0.0067 0 0.0478 \nrpy: 0 0.174 0"]
+"orbita_bottom" -> "bottom_orbita_arm"
+"bottom_orbita_arm" -> "top2head" [label="xyz: 0 0 0.013 \nrpy: 0 -0 0"]
+"top2head" -> "head"
+"head" -> "left_cam_fixed" [label="xyz: 0.0033 0.03625 0.061 \nrpy: 0 -0 0"]
+"left_cam_fixed" -> "left_camera"
+"head" -> "right_cam_fixed" [label="xyz: 0.0033 -0.03625 0.061 \nrpy: 0 -0 0"]
+"right_cam_fixed" -> "right_camera"
+"torso" -> "orbita_middle" [label="xyz: 0.0067 0 0.0478 \nrpy: 0 0.174 0"]
+"orbita_middle" -> "middle_orbita_arm"
+"middle_orbita_arm" -> "top2head" [label="xyz: 0 0 0.013 \nrpy: 0 -0 0"]
+"top2head" -> "head"
+"head" -> "left_cam_fixed" [label="xyz: 0.0033 0.03625 0.061 \nrpy: 0 -0 0"]
+"left_cam_fixed" -> "left_camera"
+"head" -> "right_cam_fixed" [label="xyz: 0.0033 -0.03625 0.061 \nrpy: 0 -0 0"]
+"right_cam_fixed" -> "right_camera"
+"torso" -> "orbita_top" [label="xyz: 0.0067 0 0.0478 \nrpy: 0 0.174 0"]
+"orbita_top" -> "top_orbita_arm"
+"top_orbita_arm" -> "top2head" [label="xyz: 0 0 0.013 \nrpy: 0 -0 0"]
+"top2head" -> "head"
+"head" -> "left_cam_fixed" [label="xyz: 0.0033 0.03625 0.061 \nrpy: 0 -0 0"]
+"left_cam_fixed" -> "left_camera"
+"head" -> "right_cam_fixed" [label="xyz: 0.0033 -0.03625 0.061 \nrpy: 0 -0 0"]
+"right_cam_fixed" -> "right_camera"
+"torso" -> "r_shoulder_pitch" [label="xyz: 0 -0.19 0 \nrpy: 0 -0 0"]
+"r_shoulder_pitch" -> "r_shoulder"
+"r_shoulder" -> "r_shoulder_roll" [label="xyz: 0 0 0 \nrpy: 0 -0 0"]
+"r_shoulder_roll" -> "r_shoulder_x"
+"r_shoulder_x" -> "r_arm_yaw" [label="xyz: 0 0 0 \nrpy: 0 -0 0"]
+"r_arm_yaw" -> "r_upper_arm"
+"r_upper_arm" -> "r_elbow_pitch" [label="xyz: 0 0 -0.28 \nrpy: 0 -0 0"]
+"r_elbow_pitch" -> "r_forearm"
+"r_forearm" -> "r_forearm_yaw" [label="xyz: 0 0 0 \nrpy: 0 -0 0"]
+"r_forearm_yaw" -> "r_wrist"
+"r_wrist" -> "r_wrist_pitch" [label="xyz: 0 0 -0.25 \nrpy: 0 -0 0"]
+"r_wrist_pitch" -> "r_wrist2hand"
+"r_wrist2hand" -> "r_wrist_roll" [label="xyz: 0 0 -0.0325 \nrpy: 0 -0 0"]
+"r_wrist_roll" -> "r_gripper_thumb"
+"r_gripper_thumb" -> "r_gripper" [label="xyz: 0 -0.037 -0.03998 \nrpy: 0 -0 0"]
+"r_gripper" -> "r_gripper_finger"
+"r_gripper_thumb" -> "r_tip" [label="xyz: 0 -0.012 -0.085 \nrpy: 0 -0 0"]
+"r_tip" -> "right_tip"
+}
